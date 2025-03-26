@@ -6,4 +6,3 @@ include 'product-core'
 include 'product-api'
 include 'product-infra'
 include 'product-infra:product-infra-jpa'
-
