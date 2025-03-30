@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      maximum-pool-size: 1
+      minimum-idle: 1
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+      mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+  h2:
+    console:
+      enabled: false
+
+cache:
+  caffeine:
+    name:
+      - catalog
+    max-size: 100
+    ttl:
+      time: 5
+      unit: seconds
