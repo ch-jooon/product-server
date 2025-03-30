@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  profiles:
+    active: local
+    include:
+      - jpa
+      - cache
+
+springdoc:
+  api-docs:
+    path: /docs/api
+  swagger-ui:
+    path: /docs/swagger-ui
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
