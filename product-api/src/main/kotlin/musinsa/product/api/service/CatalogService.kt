@@ -13,6 +13,10 @@ class CatalogService(
     private val cacheService: CacheService,
 ) {
 
+    /**
+     * 카탈로그를 조회합니다.
+     * CacheService를 사용해서 카탈로그 조회 결과를 캐싱합니다.
+     */
     @Transactional(readOnly = true)
     fun getCatalog(query: CatalogQuery): Catalog {
         val cacheOption = query.getCacheOption()
