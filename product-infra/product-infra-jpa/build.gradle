@@ -13,6 +13,8 @@ dependencies {
     implementation("com.linecorp.kotlin-jdsl:jpql-dsl:${kotlinJdslVersion}")
     implementation("com.linecorp.kotlin-jdsl:jpql-render:${kotlinJdslVersion}")
     runtimeOnly("com.h2database:h2")
+
+    testImplementation(testFixtures(project(":product-core")))
 }
 
 bootJar {
