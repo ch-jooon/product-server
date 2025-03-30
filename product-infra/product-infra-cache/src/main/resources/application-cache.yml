@@ -1,0 +1,8 @@
+cache:
+  caffeine:
+    name:
+      - catalog
+    max-size: 100
+    ttl:
+      time: 60
+      unit: seconds
