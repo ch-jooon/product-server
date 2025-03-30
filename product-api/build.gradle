@@ -1,10 +1,19 @@
+ext {
+    springDocVersion = "2.8.6"
+}
+
 dependencies {
     implementation(project(":product-core"))
-    runtimeOnly(project(":product-infra:product-infra-jpa"))
+    implementation(project(":product-infra:product-infra-jpa"))
+    implementation(project(":product-infra:product-infra-cache"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion")
     implementation("org.springframework:spring-tx")
+
+    testImplementation("org.springframework.restdocs:spring-restdocs-restassured")
+    testImplementation("io.rest-assured:kotlin-extensions")
 }
 
 jar {
