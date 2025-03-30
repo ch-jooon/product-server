@@ -33,6 +33,7 @@ TBD
 - **테스트**
     - `JUnit 5`
     - `Kotest`
+    - `Rest Assured`
 
 ## 시스템 아키텍처
 
