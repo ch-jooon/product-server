@@ -16,12 +16,12 @@ data class CatalogQuery(
     }
 
     private fun getCacheKey(): String {
-        return "${CacheName.CATALOG.value}:${type.key}:${type.getCacheKeySuffix()}"
+        return "${CacheName.CATALOG.value}:${type.key}${type.getCacheKeySuffix()}"
     }
 
     private fun CatalogType.getCacheKeySuffix(): String {
         return when (this) {
-            LOWEST_HIGHEST_PRICE_BY_CATEGORY -> "$categoryName"
+            LOWEST_HIGHEST_PRICE_BY_CATEGORY -> ":$categoryName"
             else -> ""
         }
     }
