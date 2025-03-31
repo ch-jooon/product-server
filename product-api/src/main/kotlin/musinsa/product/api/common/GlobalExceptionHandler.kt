@@ -6,6 +6,7 @@ import musinsa.product.core.domain.exception.ProductException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageConversionException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -93,11 +94,18 @@ class GlobalExceptionHandler {
         return ApiResponse.error(res)
     }
 
+    @ExceptionHandler(HttpMessageConversionException::class)
+    fun httpMessageNotReadableException(e: HttpMessageConversionException): ResponseEntity<ApiResponse<Nothing>> {
+        e.logging()
+        val res = ErrorResponse(400, e.message ?: "잘못된 요청입니다.")
+        return ApiResponse.error(res)
+    }
+
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun exception(e: Exception): ResponseEntity<ApiResponse<Nothing>> {
         e.logging()
-        val res = ErrorResponse(500, "알 수 없는 문제가 발생했습니다.")
+        val res = ErrorResponse(500, e.message ?: "알 수 없는 문제가 발생했습니다.")
         return ApiResponse.error(res)
     }
 
