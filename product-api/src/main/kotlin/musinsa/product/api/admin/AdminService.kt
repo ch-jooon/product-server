@@ -1,7 +1,12 @@
 package musinsa.product.api.admin
 
-import musinsa.product.api.admin.model.*
+import musinsa.product.api.admin.model.AdminBrandCreateRequest
+import musinsa.product.api.admin.model.AdminBrandUpdateRequest
+import musinsa.product.api.admin.model.AdminProductCreateRequest
+import musinsa.product.api.admin.model.AdminProductUpdateRequest
 import musinsa.product.core.domain.*
+import musinsa.product.core.domain.event.BrandEvent
+import musinsa.product.core.domain.event.ProductEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -49,7 +54,9 @@ class AdminService(
             .map { it.delete() }
             .also { productRepository.saveAll(it) }
 
-        eventPublisher.refreshCache()
+        BrandEvent.Deleted(deleted.id).also {
+            eventPublisher.publishEvent(it)
+        }
         return deleted
     }
 
@@ -65,8 +72,11 @@ class AdminService(
             category = category,
         )
 
-        eventPublisher.refreshCache()
-        return productRepository.save(product)
+        val saved = productRepository.save(product)
+        ProductEvent.Created(saved.id).also {
+            eventPublisher.publishEvent(it)
+        }
+        return saved
     }
 
     @Transactional
@@ -75,7 +85,9 @@ class AdminService(
             .run { request.apply(this) }
             .run { productRepository.save(this) }
 
-        eventPublisher.refreshCache()
+        ProductEvent.Updated(changed.id).also {
+            eventPublisher.publishEvent(it)
+        }
         return changed
     }
 
@@ -85,16 +97,14 @@ class AdminService(
             .run { this.delete() }
             .run { productRepository.save(this) }
 
-        eventPublisher.refreshCache()
+        ProductEvent.Deleted(deleted.id).also {
+            eventPublisher.publishEvent(it)
+        }
         return deleted
     }
 
     @Transactional(readOnly = true)
     fun getCategories(): List<Category> {
         return categoryRepository.findAll()
-    }
-
-    private fun ApplicationEventPublisher.refreshCache() {
-        publishEvent(CacheRefreshEvent())
     }
 }
