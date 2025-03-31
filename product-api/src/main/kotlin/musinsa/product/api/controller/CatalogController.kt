@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/catalogs", produces = [MediaType.APPLICATION_JSON_VALUE])
-@Tag(name = "카탈로그 API", description = "상품을 특정 목적에 맞게 전시하기 위한 조회 기능을 제공하는 API입니다.")
+@Tag(name = "유저 카탈로그 API", description = "상품을 특정 목적에 맞게 전시하기 위한 조회 기능을 제공하는 API입니다.")
 class CatalogController(
     private val catalogService: CatalogService,
 ) {
