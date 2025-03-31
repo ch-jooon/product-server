@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  product-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: product-server
+    ports:
+      - "8080:8080"
