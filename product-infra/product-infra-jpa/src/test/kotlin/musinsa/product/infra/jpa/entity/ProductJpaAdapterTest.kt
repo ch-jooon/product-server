@@ -99,15 +99,15 @@ class ProductJpaAdapterTest {
 
         actual.size shouldBe ProductFixture.categories.size
         actual.first().brand.name shouldBe ProductFixture.브랜드D.name
-        actual shouldContainAnyOf listOf(
-            ProductFixture.D_상의,
-            ProductFixture.D_아우터,
-            ProductFixture.D_바지,
-            ProductFixture.D_스니커즈,
-            ProductFixture.D_가방,
-            ProductFixture.D_모자,
-            ProductFixture.D_양말,
-            ProductFixture.D_액세서리,
+        actual.map { it.name } shouldContainAnyOf listOf(
+            ProductFixture.D_상의.name,
+            ProductFixture.D_아우터.name,
+            ProductFixture.D_바지.name,
+            ProductFixture.D_스니커즈.name,
+            ProductFixture.D_가방.name,
+            ProductFixture.D_모자.name,
+            ProductFixture.D_양말.name,
+            ProductFixture.D_액세서리.name,
         )
     }
 
